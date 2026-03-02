@@ -67,24 +67,38 @@
     </div>
     <script>
         (function(){
-            var btn = document.getElementById('login-theme-toggle');
-            var label = document.getElementById('login-theme-toggle-label');
-            function sync() {
-                label.textContent = document.documentElement.classList.contains('dark') ? 'Light' : 'Dark';
+            function applyTheme(theme) {
+                var root = document.documentElement;
+                var body = document.body;
+                if (theme === 'dark') {
+                    root.classList.add('dark');
+                    body.classList.add('dark');
+                    root.setAttribute('data-theme', 'dark');
+                    localStorage.theme = 'dark';
+                } else {
+                    root.classList.remove('dark');
+                    body.classList.remove('dark');
+                    root.setAttribute('data-theme', 'light');
+                    localStorage.theme = 'light';
+                }
+                var label = document.getElementById('login-theme-toggle-label');
+                if (label) {
+                    label.textContent = theme === 'dark' ? 'Light' : 'Dark';
+                }
             }
-            if (btn && label) {
-                sync();
+            applyTheme(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            var btn = document.getElementById('login-theme-toggle');
+            if (btn) {
                 btn.addEventListener('click', function(){
-                    if (document.documentElement.classList.contains('dark')) {
-                        document.documentElement.classList.remove('dark');
-                        localStorage.theme = 'light';
-                    } else {
-                        document.documentElement.classList.add('dark');
-                        localStorage.theme = 'dark';
-                    }
-                    sync();
+                    var next = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+                    applyTheme(next);
                 });
             }
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+                if (!('theme' in localStorage)) {
+                    applyTheme(e.matches ? 'dark' : 'light');
+                }
+            });
         })();
     </script>
 </body>
