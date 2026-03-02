@@ -50,30 +50,30 @@
                                             <span><?php echo e(__('ui.courses')); ?></span>
                                             <span class="text-xs text-gray-500">›</span>
                                         </a>
-                                        <?php if(Route::has('products.index')): ?>
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('products.index')): ?>
                                             <a href="<?php echo e(route('products.index')); ?>" class="flex items-center justify-between rounded-lg px-3 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-800">
                                                 <span><?php echo e(__('ui.products')); ?></span>
                                                 <span class="text-xs text-gray-500">›</span>
                                             </a>
-                                        <?php endif; ?>
-                                        <?php if(Route::has('jobs.index')): ?>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('jobs.index')): ?>
                                             <a href="<?php echo e(route('jobs.index')); ?>" class="flex items-center justify-between rounded-lg px-3 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-800">
                                                 <span><?php echo e(__('ui.jobs')); ?></span>
                                                 <span class="text-xs text-gray-500">›</span>
                                             </a>
-                                        <?php endif; ?>
-                                        <?php if(Route::has('public.profiles.index')): ?>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('public.profiles.index')): ?>
                                             <a href="<?php echo e(route('public.profiles.index')); ?>" class="flex items-center justify-between rounded-lg px-3 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-800">
                                                 <span><?php echo e(__('ui.members') ?? 'Üyeler'); ?></span>
                                                 <span class="text-xs text-gray-500">›</span>
                                             </a>
-                                        <?php endif; ?>
-                                        <?php if(Route::has('support.index')): ?>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('support.index')): ?>
                                             <a href="<?php echo e(route('support.index')); ?>" class="flex items-center justify-between rounded-lg px-3 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-800">
                                                 <span><?php echo e(__('ui.support')); ?></span>
                                                 <span class="text-xs text-gray-500">›</span>
                                             </a>
-                                        <?php endif; ?>
+                                        <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                     </div>
                                 </div>
                             </details>
@@ -105,14 +105,14 @@
                                     <?php echo e(__('ui.courses')); ?>
 
                                 </a>
-                                <?php if(auth()->guard()->check()): ?>
-                                    <?php if(in_array(auth()->user()->role, ['admin','editor'])): ?>
-                                        <a href="<?php echo e(route('admin.dashboard')); ?>" class="hover:text-indigo-600">
-                                            <?php echo e(__('ui.admin_panel')); ?>
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
+                                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->user()->isAdminOrEditor()): ?>
+                                        <a href="<?php echo e(route('filament.admin.pages.dashboard')); ?>" class="hover:text-indigo-600">
+                                            <?php echo e(__('ui.admin_panel') ?? 'Admin Paneli'); ?>
 
                                         </a>
-                                    <?php endif; ?>
-                                <?php endif; ?>
+                                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                 <button
                                     id="theme-toggle-mobile"
                                     type="button"
@@ -154,7 +154,16 @@
                                     </span>
                                     <span id="theme-toggle-label">Dark</span>
                                 </button>
-                                <?php if(auth()->guard()->check()): ?>
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
+                                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->user()->isAdminOrEditor()): ?>
+                                        <a href="<?php echo e(route('filament.admin.pages.dashboard')); ?>"
+                                           class="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-700">
+                                            <?php echo e(__('ui.admin_panel') ?? 'Admin Paneli'); ?>
+
+                                        </a>
+                                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
                                     <div x-data="{ open: false }" class="relative">
                                         <button @click="open = !open" class="flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700">
                                             <img class="h-6 w-6 rounded-full object-cover" src="<?php echo e(Auth::user()->profile?->avatar ? asset('storage/' . Auth::user()->profile->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&color=7F9CF5&background=EBF4FF'); ?>" alt="<?php echo e(Auth::user()->name); ?>" />
@@ -173,9 +182,9 @@
                                             class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800"
                                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                                             <a href="<?php echo e(route('my.profile.show')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Profilim</a>
-                                            <?php if(Route::has('settings.index')): ?>
+                                            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('settings.index')): ?>
                                                 <a href="<?php echo e(route('settings.index')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Ayarlar</a>
-                                            <?php endif; ?>
+                                            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                                             <form method="POST" action="<?php echo e(route('logout')); ?>">
                                                 <?php echo csrf_field(); ?>
                                                 <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">
@@ -185,19 +194,19 @@
                                         </div>
                                     </div>
                                 <?php else: ?>
-                                    <?php if(Route::has('login')): ?>
+                                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('login')): ?>
                                         <a href="<?php echo e(route('login')); ?>" class="text-sm font-medium text-gray-700 hover:text-indigo-600 dark:text-gray-200 dark:hover:text-indigo-400">
                                             <?php echo e(__('ui.login')); ?>
 
                                         </a>
-                                    <?php endif; ?>
-                                    <?php if(Route::has('register')): ?>
+                                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(Route::has('register')): ?>
                                         <a href="<?php echo e(route('register')); ?>" class="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-semibold text-white hover:bg-indigo-700">
                                             <?php echo e(__('ui.register')); ?>
 
                                         </a>
-                                    <?php endif; ?>
-                                <?php endif; ?>
+                                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                                <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -225,62 +234,74 @@
             </nav>
 
             <!-- Page Heading -->
-            <?php if(isset($header)): ?>
+            <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($header)): ?>
                 <header class="bg-white shadow dark:bg-gray-900 dark:shadow-black/20">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         <?php echo e($header); ?>
 
                     </div>
                 </header>
-            <?php endif; ?>
+            <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
             <!-- Page Content -->
             <main>
                 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                    <?php if(session('success')): ?>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('success')): ?>
                         <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative dark:bg-green-900 dark:border-green-500 dark:text-green-100" role="alert">
                             <span class="block sm:inline"><?php echo e(session('success')); ?></span>
                         </div>
-                    <?php endif; ?>
-                    <?php if(session('error')): ?>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(session('error')): ?>
                         <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative dark:bg-red-900 dark:border-red-500 dark:text-red-100" role="alert">
                             <span class="block sm:inline"><?php echo e(session('error')); ?></span>
                         </div>
-                    <?php endif; ?>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
 
-                    <?php if(isset($slot)): ?>
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(isset($slot)): ?>
                         <?php echo e($slot); ?>
 
                     <?php else: ?>
                         <?php echo $__env->yieldContent('content'); ?>
-                    <?php endif; ?>
+                    <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 </div>
             </main>
         </div>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                var pairs = [
-                    { btn: document.getElementById('theme-toggle'), label: document.getElementById('theme-toggle-label') },
-                    { btn: document.getElementById('theme-toggle-mobile'), label: document.getElementById('theme-toggle-mobile-label') },
-                ].filter(function(p){ return p.btn && p.label; });
-                function syncAll() {
-                    var isDark = document.documentElement.classList.contains('dark');
-                    pairs.forEach(function(p){
-                        p.label.textContent = isDark ? 'Light' : 'Dark';
+                function applyTheme(theme) {
+                    var root = document.documentElement;
+                    var body = document.body;
+                    if (theme === 'dark') {
+                        root.classList.add('dark');
+                        body.classList.add('dark');
+                        root.setAttribute('data-theme', 'dark');
+                        localStorage.theme = 'dark';
+                    } else {
+                        root.classList.remove('dark');
+                        body.classList.remove('dark');
+                        root.setAttribute('data-theme', 'light');
+                        localStorage.theme = 'light';
+                    }
+                    var labels = [document.getElementById('theme-toggle-label'), document.getElementById('theme-toggle-mobile-label')]
+                        .filter(function (el) { return !!el; });
+                    labels.forEach(function (label) {
+                        label.textContent = theme === 'dark' ? 'Light' : 'Dark';
                     });
                 }
-                syncAll();
-                pairs.forEach(function(p){
-                    p.btn.addEventListener('click', function () {
-                        if (document.documentElement.classList.contains('dark')) {
-                            document.documentElement.classList.remove('dark');
-                            localStorage.theme = 'light';
-                        } else {
-                            document.documentElement.classList.add('dark');
-                            localStorage.theme = 'dark';
-                        }
-                        syncAll();
+                var current = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                applyTheme(current);
+                var btns = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')]
+                    .filter(function (el) { return !!el; });
+                btns.forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        var next = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+                        applyTheme(next);
                     });
+                });
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+                    if (!('theme' in localStorage)) {
+                        applyTheme(e.matches ? 'dark' : 'light');
+                    }
                 });
             });
         </script>

@@ -96,43 +96,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/uyeler/{user}/begen', [LikeController::class, 'store'])->name('profiles.like');
 });
 
-// Admin Routes
+// Admin Routes (legacy tools only — Filament panel handles CRUD & dashboard)
 Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/tools/route-tester', [ToolsController::class, 'routeTester'])->name('tools.route_tester');
-    
-    // Admin Resources
-    Route::resource('tickets', AdminTicketController::class); // uses index, show, update, destroy
-    Route::resource('announcements', AdminAnnouncementController::class)->except(['show']);
-    Route::resource('products', AdminProductController::class)->except(['show']);
-    Route::resource('jobs', AdminJobController::class)->except(['show']);
-    
-    // Manage Courses
-    Route::post('courses/bulk-action', [AdminCourseController::class, 'bulkAction'])->name('courses.bulk_action');
-    Route::put('courses/{course}/restore', [AdminCourseController::class, 'restore'])->name('courses.restore')->withTrashed();
-    Route::post('courses/{course}/revisions/{revision}/restore', [AdminCourseController::class, 'restoreRevision'])->name('courses.restore_revision')->withTrashed();
-    Route::delete('courses/{course}', [AdminCourseController::class, 'destroy'])->name('courses.destroy')->withTrashed();
-    Route::resource('courses', AdminCourseController::class)->except(['destroy']);
-    
-    // Manage Lessons (Nested under Courses)
-    Route::scopeBindings()->group(function () {
-        Route::post('courses/{course}/lessons/reorder', [AdminLessonController::class, 'reorder'])->name('lessons.reorder');
-        Route::post('courses/{course}/lessons/{lesson}/revisions/{revision}/restore', [AdminLessonController::class, 'restoreRevision'])->name('lessons.restore_revision');
-        Route::get('/courses/{course}/lessons/create', [AdminLessonController::class, 'create'])->name('lessons.create');
-        Route::post('/courses/{course}/lessons', [AdminLessonController::class, 'store'])->name('lessons.store');
-        Route::get('/courses/{course}/lessons/{lesson}/edit', [AdminLessonController::class, 'edit'])->name('lessons.edit');
-        Route::put('/courses/{course}/lessons/{lesson}', [AdminLessonController::class, 'update'])->name('lessons.update');
-        Route::delete('/courses/{course}/lessons/{lesson}', [AdminLessonController::class, 'destroy'])->name('lessons.destroy');
-    });
-
-    // Manage Users (admin only)
-    Route::middleware('admin.only')->group(function () {
-        Route::resource('users', AdminUserController::class)->except(['show']);
-        // Settings placeholder (admin only)
-        Route::get('/settings', function () {
-            return response('Settings placeholder', 200);
-        })->name('settings.index');
-    });
 });
 
 // Profile Routes — Türkçe

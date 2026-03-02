@@ -105,8 +105,8 @@
                                     {{ __('ui.courses') }}
                                 </a>
                                 @auth
-                                    @if(auth()->user()->role === 'admin')
-                                        <a href="{{ route('admin.dashboard') }}" class="hover:text-indigo-600">
+                                    @if(auth()->user()->isAdminOrEditor())
+                                        <a href="{{ route('filament.admin.pages.dashboard') }}" class="hover:text-indigo-600">
                                             {{ __('ui.admin_panel') ?? 'Admin Paneli' }}
                                         </a>
                                     @endif
@@ -153,8 +153,8 @@
                                     <span id="theme-toggle-label">Dark</span>
                                 </button>
                                 @auth
-                                    @if(auth()->user()->role === 'admin')
-                                        <a href="{{ route('admin.dashboard') }}"
+                                    @if(auth()->user()->isAdminOrEditor())
+                                        <a href="{{ route('filament.admin.pages.dashboard') }}"
                                            class="inline-flex items-center gap-2 rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-700">
                                             {{ __('ui.admin_panel') ?? 'Admin Paneli' }}
                                         </a>
