@@ -1,75 +1,70 @@
-# Laravel Education Portal
+# Eğitim Portalı
 
-This is a full-featured Education Portal project built with Laravel 10.
+Laravel 10 tabanlı, çok dilli (TR/EN) eğitim portalı. Yönetim paneli üzerinden ürünler, duyurular, iş ilanları ve destek talepleri yönetilir. Genel sitede kurslar, ürünler ve iş ilanları yayınlanır. Karanlık mod ve dil seçici (🇹🇷/🇬🇧) site genelinde çalışır.
 
-## Project Structure
+## Özellikler
+- Çok dil: Türkçe (varsayılan) ve İngilizce. Seçim oturum + çerez ile kalıcıdır.
+- Yönetim Paneli: Ürünler, Duyurular, İş İlanları, Destek Talepleri için CRUD.
+- Karanlık Mod: Layout üzerinden class tabanlı `dark` modu.
+- Logo: Tüm sayfalarda `public/images/3s-logo.png` (yoksa `3s-grup-logo.png`) kullanılır.
+- Basit ve erişilebilir UI (Blade + Tailwind).
 
-The project files have been generated with the following structure:
+## Teknoloji Yığını
+- PHP 8.x, Laravel 10
+- Blade, TailwindCSS (dark mode: class)
 
-- **Auth System**: Custom `role` field in Users table for Admin/User distinction.
-- **Course System**: Admin management for courses (Title, Description, Price, Thumbnail).
-- **Lesson System**: Course content management with video support and ordering.
-- **Enrollment**: Users can enroll in courses.
-- **Middleware**: `CheckEnrollment` for lesson access and `AdminAccess` for dashboard.
-- **Views**: Tailwind CSS styled Blade templates.
+## Kurulum
+1. Depoyu klonlayın:
+   ```bash
+   git clone <REPO_URL> egitim-portali
+   cd egitim-portali
+   ```
+2. Bağımlılıkları yükleyin:
+   ```bash
+   .\php\php.exe -c .\php\php.ini composer.phar install
+   ```
+3. Ortam dosyasını hazırlayın:
+   ```bash
+   copy .env.example .env
+   ```
+   Ardından veritabanı ayarlarını `.env` içinde düzenleyin.
+4. Uygulama anahtarını oluşturun:
+   ```bash
+   .\php\php.exe -c .\php\php.ini artisan key:generate
+   ```
+5. Veritabanı tablolarını oluşturun:
+   ```bash
+   .\php\php.exe -c .\php\php.ini artisan migrate
+   ```
 
-## Prerequisites
-
-To run this project, you need:
-
-- **PHP 8.1+**
-- **Composer**
-- **Node.js & NPM**
-- **MySQL Database**
-
-## Installation Steps
-
-Since the current environment does not have PHP/Composer installed, please follow these steps on your local machine:
-
-1.  **Initialize Laravel**:
-    The project files provided are the *custom* implementation files. You need to install the core Laravel framework first.
-    
-    ```bash
-    # Create a new Laravel project (if starting from scratch)
-    composer create-project laravel/laravel egitim-portali
-    
-    # OR if you are using the provided files:
-    composer install
-    ```
-
-2.  **Setup Environment**:
-    Copy `.env.example` to `.env` and configure your database.
-    
-    ```bash
-    cp .env.example .env
-    php artisan key:generate
-    ```
-
-3.  **Run Migrations & Seeders**:
-    ```bash
-    php artisan migrate --seed
-    ```
-    *This will create an Admin user: `admin@example.com` / `password`*
-
-4.  **Install Frontend Dependencies**:
-    ```bash
-    npm install
-    npm run dev
-    ```
-
-5.  **Serve Application**:
-    ```bash
-    php artisan serve
-    ```
-
-6.  **Access in Browser**:
-    Open `http://localhost:8000`
-
-## Note on Docker/Sail
-
-If you prefer using Docker, you can install Laravel Sail:
-
+## Çalıştırma
 ```bash
-php artisan sail:install
-./vendor/bin/sail up
+.\php\php.exe -c .\php\php.ini artisan serve --host=127.0.0.1 --port=2323
 ```
+Tarayıcı: http://127.0.0.1:2323
+
+## Dil Değiştirme
+- Navbar sağ üstte 🇹🇷 ve 🇬🇧 butonları var.
+- Seçim anında aktif olur ve sayfalar arası korunur.
+- Varsayılan ve yedek dil: `tr`.
+
+## Admin Paneli
+- Yönetim için giriş yaptıktan sonra Admin Paneli üzerinden:
+  - Ürünler: oluşturma, düzenleme, silme
+  - Duyurular: oluşturma, düzenleme, silme
+  - İş İlanları: oluşturma, düzenleme, silme
+  - Destek Talepleri: durum güncelleme ve silme
+- Başarı mesajları i18n kullanır (`lang/tr/messages.php`, `lang/en/messages.php`).
+
+## Logolar
+- `public/images/3s-logo.png` mevcutsa bu kullanılır; yoksa `public/images/3s-grup-logo.png` devreye girer.
+- Farklı bir logo için `resources/views/layouts/app.blade.php` içindeki yol güncellenebilir.
+
+## Katkı
+1. Yeni bir dal açın: `git checkout -b ozellik/xyz`
+2. Değişiklikleri yapın ve test edin
+3. PR açın
+
+## Lisans
+Bu proje kurum içi kullanım içindir.
+
