@@ -1,1 +1,33 @@
-node_modules
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+/node_modules
+/vendor
+/storage/*.key
+/storage/personal-access-*.txt
+/public/build
+/public/hot
+/public/storage
+/public/mix-manifest.json
+/bootstrap/cache/packages.php
+/bootstrap/cache/services.php
+/bootstrap/cache/config.php
+ 
+# Laravel storage (runtime) — do not commit
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/app/*
+# Keep symlink target managed via artisan storage:link
+/public/storage

@@ -4,11 +4,24 @@ use App\Http\Controllers\Admin\CourseController as AdminCourseController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LessonController as AdminLessonController;
 use App\Http\Controllers\Admin\ToolsController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\SupportTicketController as AdminTicketController;
+use App\Http\Controllers\Admin\AnnouncementController as AdminAnnouncementController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MyProfileController;
+use App\Http\Controllers\ProfilesController;
+use App\Http\Controllers\SupportTicketController;
+use App\Http\Controllers\PortalController;
+use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Middleware\AdminAccess;
 use App\Http\Middleware\CheckEnrollment;
 use Illuminate\Support\Facades\Route;
@@ -28,40 +41,71 @@ Route::get('/', function () {
     return redirect()->route('courses.index');
 });
 
+// Backward compatibility: /home should always resolve
+Route::redirect('/home', '/')->name('home');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Minimal Auth routes (login/logout)
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [LoginController::class, 'show'])->name('login');
-    Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-});
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+// Locale
+Route::post('/locale', [LocaleController::class, 'update'])->name('locale.update');
 
-// Public Course Routes
-Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
-Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.show');
+// Minimal Auth routes (login/logout) — Türkçe URL'ler, isimler aynı
+Route::middleware('guest')->group(function () {
+    Route::get('/giris', [LoginController::class, 'show'])->name('login');
+    Route::post('/giris', [LoginController::class, 'login'])->name('login.post');
+});
+Route::post('/cikis', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+
+// Public Course Routes — Türkçe
+Route::get('/kurslar', [CourseController::class, 'index'])->name('courses.index');
+Route::get('/kurslar/{course}', [CourseController::class, 'show'])->name('courses.show');
+
+// Public Portal Pages — Türkçe
+Route::get('/urunler', [ProductController::class, 'index'])->name('products.index');
+Route::get('/is-ilanlari', [PortalController::class, 'jobs'])->name('jobs.index');
 
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profil', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profil', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Enrollment
-    Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'store'])->name('courses.enroll');
+    Route::post('/kurslar/{course}/kayit', [EnrollmentController::class, 'store'])->name('courses.enroll');
 
     // Protected Lesson Routes
     Route::middleware(CheckEnrollment::class)->scopeBindings()->group(function () {
-        Route::get('/courses/{course}/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
+        Route::get('/kurslar/{course}/dersler/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
     });
+
+    // Portal Routes
+    Route::get('/uyelerim', [PortalController::class, 'profiles'])->name('members.index');
+    Route::get('/destek', [SupportTicketController::class, 'index'])->name('support.index');
+    Route::get('/planlar', [MembershipController::class, 'index'])->name('plans.index');
+    Route::post('/planlar/{plan}/abonelik', [MembershipController::class, 'subscribe'])->name('plans.subscribe');
+    Route::post('/planlar/abonelik-iptal', [MembershipController::class, 'unsubscribe'])->name('plans.unsubscribe');
+    // Resource: kullanıcı destek talepleri (URI Türkçe, isimler aynı kalır)
+    Route::resource('destek', SupportTicketController::class)
+        ->names('tickets')
+        ->parameters(['destek' => 'ticket']);
+    Route::post('/destek/{ticket}/yanitla', [SupportTicketController::class, 'reply'])->name('tickets.reply');
+    Route::get('/uyeler', [PortalController::class, 'profiles'])->name('profiles.index');
+    Route::get('/uyeler/{user}', [PortalController::class, 'showProfile'])->name('profiles.show');
+    Route::post('/uyeler/{user}/begen', [LikeController::class, 'store'])->name('profiles.like');
 });
 
 // Admin Routes
 Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/tools/route-tester', [ToolsController::class, 'routeTester'])->name('tools.route_tester');
+    
+    // Admin Resources
+    Route::resource('tickets', AdminTicketController::class); // uses index, show, update, destroy
+    Route::resource('announcements', AdminAnnouncementController::class)->except(['show']);
+    Route::resource('products', AdminProductController::class)->except(['show']);
+    Route::resource('jobs', AdminJobController::class)->except(['show']);
     
     // Manage Courses
     Route::post('courses/bulk-action', [AdminCourseController::class, 'bulkAction'])->name('courses.bulk_action');
@@ -80,6 +124,30 @@ Route::middleware(['auth', AdminAccess::class])->prefix('admin')->name('admin.')
         Route::put('/courses/{course}/lessons/{lesson}', [AdminLessonController::class, 'update'])->name('lessons.update');
         Route::delete('/courses/{course}/lessons/{lesson}', [AdminLessonController::class, 'destroy'])->name('lessons.destroy');
     });
+
+    // Manage Users (admin only)
+    Route::middleware('admin.only')->group(function () {
+        Route::resource('users', AdminUserController::class)->except(['show']);
+        // Settings placeholder (admin only)
+        Route::get('/settings', function () {
+            return response('Settings placeholder', 200);
+        })->name('settings.index');
+    });
 });
+
+// Profile Routes — Türkçe
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profilim', [MyProfileController::class, 'show'])->name('my.profile.show');
+    Route::get('/profilim/duzenle', [MyProfileController::class, 'edit'])->name('my.profile.edit');
+    Route::put('/profilim', [MyProfileController::class, 'update'])->name('my.profile.update');
+});
+
+// Public Profile Routes — Türkçe
+Route::get('/uyeler', [ProfilesController::class, 'index'])->name('public.profiles.index');
+Route::get('/uyeler/{user}', [ProfilesController::class, 'show'])->name('public.profiles.show');
+
+Route::get('/ben', function () {
+    return redirect()->route('my.profile.show');
+})->middleware('auth')->name('me');
 
 require __DIR__.'/auth.php';

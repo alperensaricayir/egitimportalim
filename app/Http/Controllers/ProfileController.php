@@ -18,6 +18,10 @@ class ProfileController extends Controller
         $user->fill($request->only([
             'name',
             'email',
+            'bio',
+            'city',
+            'phone',
+            'avatar',
         ]));
 
         $user->save();

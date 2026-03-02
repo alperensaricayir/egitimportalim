@@ -1,1 +1,6 @@
-<?php\n\nuse Illuminate\Support\Facades\Route;\n\n// Placeholder auth routes if scaffold is not installed.\n// You can replace with Breeze/Jetstream/etc.\n
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+// Placeholder auth routes if scaffold is not installed.
+// You can replace with Breeze/Jetstream/etc.

@@ -22,6 +22,10 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'bio',
+        'phone',
+        'city',
+        'avatar',
     ];
 
     /**
@@ -47,6 +51,56 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
+    }
+
+    public function isAdminOrEditor(): bool
+    {
+        return in_array($this->role, ['admin', 'editor'], true);
+    }
+
+    public function socialLinks()
+    {
+        return $this->hasMany(SocialLink::class);
+    }
+
+    public function supportTickets()
+    {
+        return $this->hasMany(SupportTicket::class);
+    }
+
+    public function likesGiven()
+    {
+        return $this->hasMany(Like::class, 'user_id');
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function likesReceived()
+    {
+        return $this->hasMany(Like::class, 'liked_user_id');
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function activeSubscription()
+    {
+        return $this->hasOne(Subscription::class)->where('active', true)->latestOfMany();
+    }
+
+    public function isPremium(): bool
+    {
+        $sub = $this->activeSubscription;
+        if (!$sub) {
+            return false;
+        }
+        $plan = $sub->plan;
+        return $plan?->is_premium === true;
     }
 
     public function enrollments()

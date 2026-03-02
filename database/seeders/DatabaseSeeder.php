@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -77,5 +78,19 @@ class DatabaseSeeder extends Seeder
             'content' => 'OOP is a programming paradigm based on the concept of "objects".',
             'order' => 1,
         ]);
+
+        // Create default profiles for all users without profiles
+        User::with('profile')->get()->each(function (User $u) {
+            if (!$u->profile) {
+                $u->profile()->create([
+                    'headline' => 'Member',
+                    'bio' => 'Welcome to my profile!',
+                    'city' => $u->city ?? null,
+                    'country' => $u->country ?? null,
+                    'skills' => $u->isAdmin() ? ['Laravel', 'PHP'] : [],
+                    'is_public' => false,
+                ]);
+            }
+        });
     }
 }

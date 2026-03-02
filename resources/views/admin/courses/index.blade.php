@@ -13,15 +13,15 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Search & Filters -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6 p-6">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6 p-6 dark:bg-gray-900 dark:border dark:border-gray-700">
                 <form action="{{ route('admin.courses.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
                     <div>
-                        <label for="search" class="block text-sm font-medium text-gray-700">Search</label>
-                        <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Title..." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Search</label>
+                        <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Title..." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
                     </div>
                     <div>
-                        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                        <select name="status" id="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
+                        <select name="status" id="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
                             <option value="">All Statuses</option>
                             <option value="published" {{ request('status') === 'published' ? 'selected' : '' }}>Published</option>
                             <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>Draft</option>
@@ -29,23 +29,23 @@
                         </select>
                     </div>
                     <div>
-                        <label for="is_paid" class="block text-sm font-medium text-gray-700">Price Type</label>
-                        <select name="is_paid" id="is_paid" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="is_paid" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Price Type</label>
+                        <select name="is_paid" id="is_paid" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
                             <option value="">All</option>
                             <option value="1" {{ request('is_paid') === '1' ? 'selected' : '' }}>Paid</option>
                             <option value="0" {{ request('is_paid') === '0' ? 'selected' : '' }}>Free</option>
                         </select>
                     </div>
                     <div>
-                        <label for="trashed" class="block text-sm font-medium text-gray-700">Deleted</label>
-                        <select name="trashed" id="trashed" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <label for="trashed" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Deleted</label>
+                        <select name="trashed" id="trashed" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
                             <option value="">Active Only</option>
                             <option value="with" {{ request('trashed') === 'with' ? 'selected' : '' }}>With Trashed</option>
                             <option value="only" {{ request('trashed') === 'only' ? 'selected' : '' }}>Only Trashed</option>
                         </select>
                     </div>
                     <div class="flex items-end">
-                        <button type="submit" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full">
+                        <button type="submit" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full dark:bg-gray-700 dark:hover:bg-gray-600">
                             Filter
                         </button>
                     </div>
@@ -53,12 +53,12 @@
             </div>
 
             <!-- Bulk Actions & List -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg dark:bg-gray-900 dark:border dark:border-gray-700">
                 <form action="{{ route('admin.courses.bulk_action') }}" method="POST" id="bulk-action-form">
                     @csrf
-                    <div class="p-4 border-b border-gray-200 flex items-center justify-between">
+                    <div class="p-4 border-b border-gray-200 flex items-center justify-between dark:border-gray-700">
                         <div class="flex items-center space-x-2">
-                            <select name="action" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-sm">
+                            <select name="action" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
                                 <option value="">Bulk Actions</option>
                                 <option value="publish">Publish</option>
                                 <option value="unpublish">Unpublish</option>
@@ -70,42 +70,42 @@
                                 Apply
                             </button>
                         </div>
-                        <div class="text-sm text-gray-500">
+                        <div class="text-sm text-gray-500 dark:text-gray-300">
                             {{ $courses->total() }} courses found
                         </div>
                     </div>
 
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-50 dark:bg-gray-900">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-4 dark:text-gray-300">
                                         <input type="checkbox" id="select-all" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">
                                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'title', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}" class="group flex items-center">
                                             Title
                                             <!-- Sort icon logic here if needed -->
                                         </a>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">Price</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">
                                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'students_count', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">
                                             Students
                                         </a>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">
                                         <a href="{{ request()->fullUrlWithQuery(['sort' => 'created_at', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}">
                                             Date
                                         </a>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-300">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-900 dark:divide-gray-700">
                                 @forelse($courses as $course)
-                                    <tr class="{{ $course->trashed() ? 'bg-red-50' : '' }}">
+                                    <tr class="{{ $course->trashed() ? 'bg-red-50 dark:bg-red-900/40' : '' }}">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <input type="checkbox" name="ids[]" value="{{ $course->id }}" class="course-checkbox rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                         </td>
@@ -116,18 +116,18 @@
                                                         <img class="h-10 w-10 rounded object-cover" src="{{ Storage::disk('public')->url($course->thumbnail) }}" alt="">
                                                     </div>
                                                 @else
-                                                    <div class="flex-shrink-0 h-10 w-10 bg-gray-200 rounded flex items-center justify-center">
-                                                        <span class="text-gray-500 text-xs">No Img</span>
+                                                    <div class="flex-shrink-0 h-10 w-10 bg-gray-200 rounded flex items-center justify-center dark:bg-gray-800">
+                                                        <span class="text-gray-500 text-xs dark:text-gray-300">No Img</span>
                                                     </div>
                                                 @endif
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                                         {{ $course->title }}
                                                         @if($course->trashed())
-                                                            <span class="text-red-600 text-xs ml-2">(Deleted)</span>
+                                                            <span class="text-red-600 text-xs ml-2 dark:text-red-400">(Deleted)</span>
                                                         @endif
                                                     </div>
-                                                    <div class="text-xs text-gray-500">{{ \Illuminate\Support\Str::limit($course->description, 50) }}</div>
+                                                    <div class="text-xs text-gray-500 dark:text-gray-300">{{ \Illuminate\Support\Str::limit($course->description, 50) }}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -138,13 +138,13 @@
                                                 {{ ucfirst($course->status) }}
                                             </span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                                             {{ $course->is_paid ? '$' . $course->price : 'Free' }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                                             {{ $course->users_count ?? 0 }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                                             {{ $course->created_at->format('M d, Y') }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -161,7 +161,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+                                        <td colspan="7" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 dark:text-gray-300">
                                             No courses found.
                                         </td>
                                     </tr>
